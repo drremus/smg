@@ -74,10 +74,13 @@ async def insert_sentence(sentence: Sentence) -> SentenceWithCypher:
 @router_sentences.get(
     "/sentences_id_string/{sentenceId}",
     response_model=SentenceWithCypher,
+    responses={ 200: {"description": "successful operation"},
+                400: {"description": "Invalid ID supplied, please provide an interer"},
+                404: {"description": "Sentence not found"}},
 )
 async def get_sentence_by_id_sting(sentenceId: str) -> SentenceWithCypher:
     if not sentenceId.isdigit():
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid ID supplied")
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Invalid ID supplied, please provide an interer.")
 
     sentenceId = int(sentenceId)
     query = f"select text from sentences.sentences where id = {sentenceId}"
