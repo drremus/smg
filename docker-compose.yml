@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  smg:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/.credentials/gc.json
+    volumes: 
+      - ~/.credentials/:/.credentials/
+    ports:
+      - "18080:8080"
+    command: python app.py
